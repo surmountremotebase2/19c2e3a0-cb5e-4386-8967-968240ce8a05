@@ -12,13 +12,13 @@ class TradingStrategy(Strategy):
                         "MRK", "XOM", "WMT", "CSCO", "ABT", "VZ", "NKE", 
                         "ABBV", "TMO", "CVX", "ACN", "MCD", "COST", "TXN", 
                         "NEE", "WFC", "HON", "ORCL", "LLY", "DHR", "PM", "QCOM", 
-                        "AMGN", "UNP", "IBM", "AMD", "NOW", "AXP", "LIN", "CAT", 
+                        "AMGN", "UNP", "IBM", "AMD", "AXP", "LIN", "CAT", 
                         "MDT", "GS", "LOW", "UPS", "SBUX", "RTX", "SPGI", "MMM", 
                         "BLK", "INTU", "DUK", "MO", "BDX", "ISRG", "CI", "CSX", 
                         "PLD", "VRTX", "TGT", "LMT", "ICE", "ADI", "SO", 
                         "BMY", "CME", "SYK", "SPG", "FIS", "REGN", "CHTR", 
                         "GILD", "ATVI", "MMC", "ADP", "CB", "SCHW", "BSX"]
-        # Initialize a dictionary to track the holding status of each stock "ZTS", 
+        # Initialize a dictionary to track the holding status of each stock "ZTS", "NOW",
         self.stock_holdings = {ticker: False for ticker in self.tickers}
 
     @property
