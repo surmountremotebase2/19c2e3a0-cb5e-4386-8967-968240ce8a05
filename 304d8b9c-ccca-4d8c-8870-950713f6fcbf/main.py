@@ -31,7 +31,7 @@ class TradingStrategy(Strategy):
         # Check if there's enough data for Bollinger Bands calculation (typically requires at least 20 periods)
         if len(ohlcv_data) >= 20:
             # Bollinger Bands indicator for SQ, with a 20-day period and standard deviation of 2 (default values)
-            bb = BB("SQ", ohlcv_data, 20, 2)
+            bb = BB("SQ", ohlcv_data, 20, 3)
             current_price = ohlcv_data[-1]["SQ"]["close"]
             
             # Determine the strategy for returning TargetAllocation
