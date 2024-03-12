@@ -64,14 +64,7 @@ class TradingStrategy(Strategy):
             if smavol5[-1]/smavol40[-1]-1>0:
                     self.allocation_dict[ticker] = 1
             else: self.allocation_dict[ticker] = 0
-
-            if losing_for_5_days and self.stock_holdings[ticker] == False:
-                allocation_dict[ticker] = 1  # Allocate all to this stock
-                self.stock_holdings[ticker] = True  # Update the holding status
-            else:
-                allocation_dict[ticker] = 0  # Allocate all to this stock
-                self.stock_holdings[ticker] = False  # Update the holding status
-        
+       
         # Filter out the stocks with value 1
         allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
         
