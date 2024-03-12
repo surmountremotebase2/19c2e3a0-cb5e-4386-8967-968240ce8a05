@@ -27,7 +27,7 @@ class TradingStrategy(Strategy):
         # Extract the recent volume and trading data for MSFT
         recent_data = data["ohlcv"]
        
-        if len(recent_data) > self.lookback_periods:
+        while (true):
             # Calculate the average volume over the lookback period
             average_volume = sum([i[self.ticker]["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
             current_volume = recent_data[-1][self.ticker]["volume"]
