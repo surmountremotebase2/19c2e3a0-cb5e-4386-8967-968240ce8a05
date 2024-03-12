@@ -73,6 +73,3 @@ class TradingStrategy(Strategy):
             percentage_change = ((ohlcv_data["close"][-1] - ohlcv_data["open"][-1]) / ohlcv_data["open"][-1]) * 100
             if percentage_change > 0:
                 self.candidate_stocks.append(ticker)
-
-# Example usage:
-strategy = TradingStrategy()
