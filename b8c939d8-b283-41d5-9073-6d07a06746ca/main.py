@@ -30,7 +30,7 @@ class TradingStrategy(Strategy):
         # Calculate the average volume over the lookback period
         average_volume = sum([i[self.ticker]["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
         current_volume = recent_data[-1][self.ticker]["volume"]
-        transaction_type = recent_data[-1][self.ticker].get("acquistionOrDisposition", "")
+        transaction_type = recent_data[-1][self.ticker].get("acquisitionOrDisposition", "")
         transaction_amt = recent_data[-1][self.ticker].get("securitiesTransacted","")
 
         # If the current volume is significantly higher than the average, buy MSFT
