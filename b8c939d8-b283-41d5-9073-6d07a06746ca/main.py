@@ -4,15 +4,14 @@ from surmount.data import Asset, InstitutionalOwnership, InsiderTrading
 import pandas_ta as ta
 import pandas as pd
 
+def SMAVol(ticker, data, length):
+    close = [i[ticker]["volume"] for i in data]
+    d = ta.sma(pd.Series(close), length=length)
+    if d is None:
+        return None
+    return d.tolist()
 
 class TradingStrategy(Strategy):
-    def SMAVol(ticker, data, length):
-        close = [i[ticker]["volume"] for i in data]
-        d = ta.sma(pd.Series(close), length=length)
-        if d is None:
-            return None
-        return d.tolist()
-
     def __init__(self):
         # Define the ticker of interest
         self.tickers = ["AAPL", "MSFT", "AMZN", "GOOGL", 
