@@ -9,7 +9,7 @@ class TradingStrategy(Strategy):
         Here, we keep it dynamic based on the criteria instead of hardcoding tickers.
         """
         # Assume this is populated with tickers that meet the initial criteria
-        self.candidate_stocks = []
+        self.candidate_stocks = ["ADD","AMBO","AMIX","APVO","AUUD","AVGR","AZTR","BBLG","BIAF","BOF","BPTH","BSGM","BTCY","BTOG","CAUD","CISO","DLA","EEIQ","EFOI","WAVD","TNON","STI","STAF","SOND","SNCR","RELI","RCRT","PRTG","PIK","OMQS","NXL","NUKK","LBBB","KA","JAN","INSG","IDAI","HWH","HEPA","HTCI","GXAI","EZFL","EGIO","EFOIEEIQ","DLA","CMAX"]
         # Track entry prices for the stocks we invest in
         self.entry_prices = {}
 
