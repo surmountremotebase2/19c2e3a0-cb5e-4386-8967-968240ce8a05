@@ -38,13 +38,13 @@ class TradingStrategy(Strategy):
         total_allocation = sum(self.allocation_dict.values())
         for ticker in self.tickers:
             # Find the dictionary corresponding to the ticker symbol
-            ticker_data = next((item for item in data["ohlcv"] if item["ticker"] == ticker), None)
+            ticker_data = next((item for item in data["ohlcv"] if ticker in item), None)
             if ticker_data is None:
                 # Handle case where ticker data is not found
                 continue
 
             # Extract the recent volume and trading data for the ticker
-            recent_data = ticker_data
+            recent_data = ticker_data[ticker]
             
             # Calculate the average volume over the lookback period
             average_volume = sum([i["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
