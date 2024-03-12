@@ -1,3 +1,7 @@
+from surmount.base_class import Strategy, TargetAllocation
+from surmount.logging import log
+from surmount.data import Asset, InstitutionalOwnership, InsiderTrading
+
 class TradingStrategy(Strategy):
     def __init__(self):
         # Define the ticker of interest
@@ -55,4 +59,5 @@ class TradingStrategy(Strategy):
             elif self.buy_signal_activated:
                 self.allocation_dict[ticker] = 1  # Maintain current holding
 
+        shared_decimal_allocation = {ticker: allocation / total_allocation for ticker, allocation in self.allocation_dict.items()}
         return TargetAllocation(self.allocation_dict)
