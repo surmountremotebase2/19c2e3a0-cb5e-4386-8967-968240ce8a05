@@ -49,6 +49,9 @@ class TradingStrategy(Strategy):
             elif gaining_for_5_days:
                 allocation_dict[ticker] = 1  # Allocate all to this stock
                 self.stock_holdings[ticker] = True  # Update the holding status
+            elif losing_for_5_days:
+                allocation_dict[ticker] = 1  # Allocate all to this stock
+                self.stock_holdings[ticker] = True  # Update the holding status
             else:
                 allocation_dict[ticker] = 0  # Do not allocate if the condition doesn't meet
         
