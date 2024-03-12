@@ -110,13 +110,6 @@ class TradingStrategy(Strategy):
             else:
                 allocation_dict[ticker] = 0  # Allocate all to this stock
                 self.stock_holdings[ticker] = False  # Update the holding status
-
-            # If the stock is currently being held, sell it (set allocation to 0) no matter what
-            if self.stock_holdings[ticker]:
-                allocation_dict[ticker] = 0
-                self.stock_holdings[ticker] = False  # Update the holding status
-            else:
-                allocation_dict[ticker] = 0  # Do not allocate if the condition doesn't meet
         
         # Filter out the stocks with value 1
         allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
