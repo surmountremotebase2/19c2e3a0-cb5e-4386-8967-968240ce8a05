@@ -4,7 +4,7 @@ from surmount.data import Asset
 
 class TradingStrategy(Strategy):
     def __init__(self):
-        self.tickers = ["AAPL", "GOOGL", "MSFT", "AMZN"]
+        self.tickers = ["AAPL", "GOOGL", "MSFT", "AMZN","ABT","AMD","NVDA","HD"]
         # Initialize a dictionary to track the holding status of each stock
         self.stock_holdings = {ticker: False for ticker in self.tickers}
 
