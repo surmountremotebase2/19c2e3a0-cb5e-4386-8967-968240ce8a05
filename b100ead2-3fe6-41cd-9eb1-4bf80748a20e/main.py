@@ -1,6 +1,6 @@
 from surmount.base_class import Strategy, TargetAllocation
 from surmount.technical_indicators import SMA
-from surmount.data import OHLCV
+from surmount.data import 
 
 class TradingStrategy(Strategy):
     def __init__(self):
