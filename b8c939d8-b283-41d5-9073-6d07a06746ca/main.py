@@ -35,10 +35,17 @@ class TradingStrategy(Strategy):
         return "1day"
 
     def run(self, data):
+        total_allocation = sum(self.allocation_dict.values())
         for ticker in self.tickers:
+            # Find the dictionary corresponding to the ticker symbol
+            ticker_data = next((item for item in data["ohlcv"] if item["ticker"] == ticker), None)
+            if ticker_data is None:
+                # Handle case where ticker data is not found
+                continue
+
             # Extract the recent volume and trading data for the ticker
-            recent_data = data["ohlcv"][ticker]
-        
+            recent_data = ticker_data
+            
             # Calculate the average volume over the lookback period
             average_volume = sum([i["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
             current_volume = recent_data[-1]["volume"]
@@ -59,22 +66,7 @@ class TradingStrategy(Strategy):
             elif self.buy_signal_activated:
                 self.allocation_dict[ticker] = 1  # Maintain current holding
 
-        # Filter out the stocks with value 1
-        allocated_stocks = [ticker for ticker, value in self.allocation_dict.items() if value == 1]
+        # Calculate shared decimal percent allocation for each ticker
+        shared_decimal_allocation = {ticker: allocation / total_allocation for ticker, allocation in self.allocation_dict.items()}
         
-        # Calculate total number of allocated stocks
-        total_allocated = len(allocated_stocks)
-        
-        # If no stocks are allocated, return an empty list
-        if total_allocated == 0:
-            return TargetAllocation({})
-
-        # Calculate percentage share for each allocated stock
-        percentage_share = (1 / total_allocated) - 0.01
-        
-        # Update the dictionary with percentage share for allocated stocks
-        for ticker in allocated_stocks:
-            self.allocation_dict[ticker] = percentage_share
-        
-        # Return the target allocation
-        return TargetAllocation(self.allocation_dict)
+        return TargetAllocation(shared_decimal_allocation)
