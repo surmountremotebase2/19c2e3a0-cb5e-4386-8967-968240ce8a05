@@ -31,7 +31,6 @@ class TradingStrategy(Strategy):
         self.lookback_periods = 30  # Lookback period to calculate average volume
         self.large_sell_threshold = 10000  # Define what is considered a large sell order
         self.buy_signal_activated = False  # Track if a buy signal has been activated
-        self.allocation_dict = {ticker: 0 for ticker in self.tickers}  # Initialize allocation dict for all tickers
 
 
     @property
@@ -59,13 +58,13 @@ class TradingStrategy(Strategy):
             smavol5 = SMAVol(ticker, data["ohlcv"], 5)
 
             if len(vols)==0 or smavol40[-1] is None or smavol40[-1] <= 0 or smavol5[-1] is None or smavol5[-1] <= 0:
-                    self.allocation_dict[ticker] = 0
+                    allocation_dict[ticker] = 0
                     continue
                     
             if smavol5[-1]/smavol40[-1]-1>0:
-                self.allocation_dict[ticker] = 1
+                allocation_dict[ticker] = 1
             else: 
-                self.allocation_dict[ticker] = 0
+                allocation_dict[ticker] = 0
                 continue
        
         # Filter out the stocks with value 1
