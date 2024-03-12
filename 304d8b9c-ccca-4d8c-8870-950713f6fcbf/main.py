@@ -36,11 +36,11 @@ class TradingStrategy(Strategy):
             
             # Determine the strategy for returning TargetAllocation
             # If the current price is above the upper Bollinger Band, allocate 100% to SQ
-            if current_price > bb["upper"][-1]:
-                log("Price above upper band, buying SQ")
+            if current_price < bb["lower"][-1]:
+                log("Price below lower band, buying SQ")
                 allocation["SQ"] = 1.0
             # If the current price is back to the mid Bollinger Band, reduce the position to 0, indicating a sell
-            elif current_price <= bb["mid"][-1] and current_price > bb["lower"][-1]:
+            elif current_price >= bb["mid"][-1] and current_price > bb["lower"][-1]:
                 log("Price returned to middle band, selling SQ")
                 allocation["SQ"] = 0
             else:
