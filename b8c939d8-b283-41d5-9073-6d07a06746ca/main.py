@@ -60,4 +60,4 @@ class TradingStrategy(Strategy):
                 self.allocation_dict[ticker] = 1  # Maintain current holding
 
         shared_decimal_allocation = {ticker: allocation / total_allocation for ticker, allocation in self.allocation_dict.items()}
-        return TargetAllocation(self.allocation_dict)
+        return TargetAllocation(self.shared_decimal_allocation)
