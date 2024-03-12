@@ -46,9 +46,9 @@ class TradingStrategy(Strategy):
                 allocation_dict[ticker] = 0
                 self.stock_holdings[ticker] = False  # Update the holding status
             # If the stock has been gaining for 3 days and it's not currently held, buy it
-            elif gaining_for_5_days:
-                allocation_dict[ticker] = 1  # Allocate all to this stock
-                self.stock_holdings[ticker] = True  # Update the holding status
+            #elif gaining_for_5_days:
+            #    allocation_dict[ticker] = 1  # Allocate all to this stock
+            #    self.stock_holdings[ticker] = True  # Update the holding status
             elif losing_for_5_days:
                 allocation_dict[ticker] = 1  # Allocate all to this stock
                 self.stock_holdings[ticker] = True  # Update the holding status
