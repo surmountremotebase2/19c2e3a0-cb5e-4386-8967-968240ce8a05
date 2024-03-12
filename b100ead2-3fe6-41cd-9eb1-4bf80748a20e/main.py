@@ -4,7 +4,7 @@ from surmount.data import Asset
 
 class TradingStrategy(Strategy):
     def __init__(self):
-        self.tickers = ["AAPL", "MSFT", "AMZN", "GOOGL", "FB", "TSLA", "BRK.A", "BRK.B", "JNJ", "JPM", "NVDA", "V", "PG", "HD", "MA", "INTC", "UNH", "BAC", "DIS", "ADBE", "CRM", "PYPL", "NFLX", "CMCSA", "KO", "T", "PEP", "MRK", "XOM", "WMT", "CSCO", "ABT", "VZ", "NKE", "ABBV", "TMO", "CVX", "ACN", "MCD", "COST", "TXN", "NEE", "WFC", "HON", "ORCL", "LLY", "DHR", "PM", "QCOM", "AMGN", "UNP", "IBM", "AMD", "NOW", "AXP", "LIN", "CAT", "MDT", "GS", "LOW", "UPS", "SBUX", "RTX", "SPGI", "MMM", "BLK", "INTU", "DUK", "MO", "BDX", "ISRG", "CI", "CSX", "PLD", "VRTX", "TGT", "LMT", "ICE", "ADI", "ANTM", "SO", "BMY", "CME", "SYK", "ZTS", "SPG", "FIS", "REGN", "CHTR", "GILD", "ATVI", "MMC", "ADP", "CB", "SCHW", "BSX"]
+        self.tickers = ["AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA", "BRK.A", "BRK.B", "JNJ", "JPM", "NVDA", "V", "PG", "HD", "MA", "INTC", "UNH", "BAC", "DIS", "ADBE", "CRM", "PYPL", "NFLX", "CMCSA", "KO", "T", "PEP", "MRK", "XOM", "WMT", "CSCO", "ABT", "VZ", "NKE", "ABBV", "TMO", "CVX", "ACN", "MCD", "COST", "TXN", "NEE", "WFC", "HON", "ORCL", "LLY", "DHR", "PM", "QCOM", "AMGN", "UNP", "IBM", "AMD", "NOW", "AXP", "LIN", "CAT", "MDT", "GS", "LOW", "UPS", "SBUX", "RTX", "SPGI", "MMM", "BLK", "INTU", "DUK", "MO", "BDX", "ISRG", "CI", "CSX", "PLD", "VRTX", "TGT", "LMT", "ICE", "ADI", "ANTM", "SO", "BMY", "CME", "SYK", "ZTS", "SPG", "FIS", "REGN", "CHTR", "GILD", "ATVI", "MMC", "ADP", "CB", "SCHW", "BSX"]
         # Initialize a dictionary to track the holding status of each stock
         self.stock_holdings = {ticker: False for ticker in self.tickers}
 
