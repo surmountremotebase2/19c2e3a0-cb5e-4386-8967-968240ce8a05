@@ -14,9 +14,9 @@ class TradingStrategy(Strategy):
                         "NEE", "WFC", "HON", "ORCL", "LLY", "DHR", "PM", "QCOM", 
                         "AMGN", "UNP", "IBM", "AMD", "NOW", "AXP", "LIN", "CAT", 
                         "MDT", "GS", "LOW", "UPS", "SBUX", "RTX", "SPGI", "MMM", 
-                    #    "BLK", "INTU", "DUK", "MO", "BDX", "ISRG", "CI", "CSX", 
-                    #    "PLD", "VRTX", "TGT", "LMT", "ICE", "ADI", "ANTM", "SO", 
-                    #    "BMY", "CME", "SYK", "ZTS", "SPG", "FIS", "REGN", "CHTR", 
+                        "BLK", "INTU", "DUK", "MO", "BDX", "ISRG", "CI", "CSX", 
+                        "PLD", "VRTX", "TGT", "LMT", "ICE", "ADI", "ANTM", "SO", 
+                        "BMY", "CME", "SYK", "ZTS", "SPG", "FIS", "REGN", "CHTR", 
                         "GILD", "ATVI", "MMC", "ADP", "CB", "SCHW", "BSX"]
         # Initialize a dictionary to track the holding status of each stock
         self.stock_holdings = {ticker: False for ticker in self.tickers}
