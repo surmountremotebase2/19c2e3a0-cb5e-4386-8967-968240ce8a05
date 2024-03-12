@@ -117,24 +117,22 @@ class TradingStrategy(Strategy):
             else:
                 allocation_dict[ticker] = 0  # Do not allocate if the condition doesn't meet
         
-        allocated_stocks = [ticker for ticker in allocation_dict[ticker] if ticker == 1]
+        # Filter out the stocks with value 1
+        allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
         
         # Calculate total number of allocated stocks
         total_allocated = len(allocated_stocks)
         
         # If no stocks are allocated, return an empty list
         if total_allocated == 0:
-            allocation_dict = []
-        else:
-            percentage_share = 1 / total_allocated
-            
-            # Update the dictionary with percentage share for allocated stocks
-            for ticker in allocated_stocks:
-                stock_dict[ticker] = percentage_share
-
-
-
-
-
+            return TargetAllocation({})
+        
+        # Calculate percentage share for each allocated stock
+        percentage_share = 1 / total_allocated
+        
+        # Update the dictionary with percentage share for allocated stocks
+        for ticker in allocated_stocks:
+            allocation_dict[ticker] = percentage_share
+        
         # Return the target allocation
         return TargetAllocation(allocation_dict)
