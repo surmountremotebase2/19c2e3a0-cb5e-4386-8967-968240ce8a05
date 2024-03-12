@@ -6,8 +6,8 @@ class TradingStrategy(Strategy):
     def __init__(self):
         self.tickers = ["AAPL", "MSFT", "AMZN", "GOOGL", 
                         "META", "TSLA", "BRK.B", "JNJ", 
-                    #    "JPM", "NVDA", "V", "PG", "HD", "MA", 
-                    #    "INTC", "UNH", "BAC", "DIS", "ADBE", "CRM", 
+                        "JPM", "NVDA", "V", "PG", "HD", "MA", 
+                        "INTC", "UNH", "BAC", "DIS", "ADBE", "CRM", 
                     #    "PYPL", "NFLX", "CMCSA", "KO", "T", "PEP", 
                     #    "MRK", "XOM", "WMT", "CSCO", "ABT", "VZ", "NKE", 
                     #    "ABBV", "TMO", "CVX", "ACN", "MCD", "COST", "TXN", 
