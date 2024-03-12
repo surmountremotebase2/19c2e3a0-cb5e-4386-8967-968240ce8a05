@@ -20,7 +20,7 @@ class TradingStrategy(Strategy):
       ko_price = data["ohlcv"][-1]["KO"]["close"]
       pep_price = data["ohlcv"][-1]["PEP"]["close"]
 
-      ratio = [data["ohlcv"][i]["KO"]["close"]/data["ohlcv"][i]["PEP"]["close"] for i in range(len(data["ohlcv"]))]
+      ratio = [data["ohlcv"][i]["PEP"]["close"]/data["ohlcv"][i]["KO"]["close"] for i in range(len(data["ohlcv"]))]
       mean = sum(ratio)/len(ratio)
       dev = stdev(ratio)
 
@@ -30,14 +30,14 @@ class TradingStrategy(Strategy):
       tqqq_stake = 0.2
 
       if ratio[-1] > mean + dev/1.2:
-         ko_stake = 0
-         pep_stake = 0.85
+         ko_stake = 0.85
+         pep_stake = 0
          spy_stake = 0.1
          tqqq_stake = 0.05
       
       elif ratio[-1] < mean - dev/1.2:
-         ko_stake = 0.85
-         pep_stake = 0
+         ko_stake = 0
+         pep_stake = 0.85
          spy_stake = 0.1
          tqqq_stake = 0.05
 
