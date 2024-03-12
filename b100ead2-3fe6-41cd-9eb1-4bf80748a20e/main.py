@@ -34,6 +34,12 @@ class TradingStrategy(Strategy):
                                  ohlcv_data[-4][ticker]["close"] < ohlcv_data[-3][ticker]["close"] and \
                                  ohlcv_data[-3][ticker]["close"] < ohlcv_data[-2][ticker]["close"] and \
                                  ohlcv_data[-2][ticker]["close"] < ohlcv_data[-1][ticker]["close"]
+
+            losing_for_5_days =  ohlcv_data[-6][ticker]["close"] > ohlcv_data[-3][ticker]["close"] and \
+                                 ohlcv_data[-5][ticker]["close"] > ohlcv_data[-3][ticker]["close"] and \
+                                 ohlcv_data[-4][ticker]["close"] > ohlcv_data[-3][ticker]["close"] and \
+                                 ohlcv_data[-3][ticker]["close"] > ohlcv_data[-2][ticker]["close"] and \
+                                 ohlcv_data[-2][ticker]["close"] > ohlcv_data[-1][ticker]["close"]
             
             # If the stock is currently being held, sell it (set allocation to 0) no matter what
             if self.stock_holdings[ticker]:
