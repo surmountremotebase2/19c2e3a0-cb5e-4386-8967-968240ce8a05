@@ -46,6 +46,5 @@ class TradingStrategy(Strategy):
             else:
                 # Maintain the current allocation if no conditions are met
                 log("No action required, holding position")
-                allocation["SQ"] = 0
         
         return TargetAllocation(allocation)
