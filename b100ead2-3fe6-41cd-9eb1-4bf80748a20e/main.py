@@ -117,7 +117,7 @@ class TradingStrategy(Strategy):
             else:
                 allocation_dict[ticker] = 0  # Do not allocate if the condition doesn't meet
         
-        allocated_stocks = [ticker for ticker, value in allocation_dict[] if value == 1]
+        allocated_stocks = [x for x in allocation_dict if x == 1]
         
         # Calculate total number of allocated stocks
         total_allocated = len(allocated_stocks)
