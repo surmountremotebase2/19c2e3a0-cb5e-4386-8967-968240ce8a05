@@ -17,11 +17,6 @@ class TradingStrategy(Strategy):
     def assets(self):
         return self.tickers
 
-    @property
-    def data(self):
-        # Only OHLCV data is needed for this strategy
-        return [OHLCV(ticker) for ticker in self.tickers]
-
     def run(self, data):
         allocation_dict = {}
         
