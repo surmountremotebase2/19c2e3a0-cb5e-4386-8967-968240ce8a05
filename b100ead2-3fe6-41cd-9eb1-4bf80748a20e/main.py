@@ -104,7 +104,7 @@ class TradingStrategy(Strategy):
                                  ohlcv_data[-2][ticker]["close"] > ohlcv_data[-1][ticker]["close"]
 
             
-            if losing_for_5_days and self.stock_holdings[ticker] == False:
+            if losing_for_6_days and self.stock_holdings[ticker] == False:
                 allocation_dict[ticker] = 1  # Allocate all to this stock
                 self.stock_holdings[ticker] = True  # Update the holding status
             else:
