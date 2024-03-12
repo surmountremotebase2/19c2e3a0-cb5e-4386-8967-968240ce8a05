@@ -1,6 +1,9 @@
 from surmount.base_class import Strategy, TargetAllocation
 from surmount.logging import log
 from surmount.data import Asset, InstitutionalOwnership, InsiderTrading
+import pandas_ta as ta
+import pandas as pd
+
 
 class TradingStrategy(Strategy):
     def __init__(self):
@@ -24,6 +27,23 @@ class TradingStrategy(Strategy):
         self.buy_signal_activated = False  # Track if a buy signal has been activated
         self.allocation_dict = {ticker: 0 for ticker in self.tickers}  # Initialize allocation dict for all tickers
 
+
+    def SMAVol(ticker, data, length):
+        '''Calculate the moving average of trading volume
+
+        :param ticker: a string ticker
+        :param data: data as provided from the OHLCV data function
+        :param length: the window
+
+        :return: list with float SMA
+        '''
+        close = [i[ticker]["volume"] for i in data]
+        d = ta.sma(pd.Series(close), length=length)
+        if d is None:
+            return None
+        return d.tolist()
+
+
     @property
     def assets(self):
         # Only interested in trading MSFT for this strategy
@@ -35,38 +55,49 @@ class TradingStrategy(Strategy):
         return "1day"
 
     def run(self, data):
-        total_allocation = sum(self.allocation_dict.values())
+        allocation_dict = {}
+        ohlcv_data = data["ohlcv"]
+
         for ticker in self.tickers:
-            # Find the dictionary corresponding to the ticker symbol
-            ticker_data = next((item for item in data["ohlcv"] if ticker in item), None)
-            if ticker_data is None:
-                # Handle case where ticker data is not found
+            # Check if we have enough data points (at least 4 days to make a decision)
+            if len(data["ohlcv"]) < 30:
+                allocation_dict[ticker] = 0
                 continue
 
-            # Extract the recent volume and trading data for the ticker
-            recent_data = ticker_data[ticker]
-            
-            # Calculate the average volume over the lookback period
-            average_volume = sum([i["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
-            current_volume = recent_data[-1]["volume"]
-            transaction_type = recent_data[-1].get("acquisitionOrDisposition", "")
-            transaction_amt = recent_data[-1].get("securitiesTransacted", 0)
+            vols = [i[ticker]["volume"] for i in data["ohlcv"]]
+            smavol40 = SMAVol(ticker, data["ohlcv"], 40)
+            smavol5 = SMAVol(ticker, data["ohlcv"], 5)
 
-            # If the current volume is significantly higher than the average, buy the ticker
-            if current_volume > average_volume and not self.buy_signal_activated:
-                log(f"Buy signal activated for {ticker} due to high volume")
-                self.allocation_dict[ticker] = 1  # Buy (go long on) the ticker
-                self.buy_signal_activated = True
-            # Sell the ticker if a large sell order is detected
-            elif self.buy_signal_activated and transaction_type == "D" and transaction_amt > self.large_sell_threshold:
-                log(f"Sell signal activated for {ticker} due to large sell order")
-                self.allocation_dict[ticker] = 0  # Sell the ticker
-                self.buy_signal_activated = False
-            # Continue holding the ticker if neither condition is met but a buy was previously activated
-            elif self.buy_signal_activated:
-                self.allocation_dict[ticker] = 1  # Maintain current holding
+            if len(vols)==0:
+                    self.allocation_dict[ticker] = 0
+                    
+            if smavol5[-1]/smavol40[-1]-1>0:
+                    self.allocation_dict[ticker] = 1
+            else: self.allocation_dict[ticker] = 0
 
-        # Calculate shared decimal percent allocation for each ticker
-        shared_decimal_allocation = {ticker: allocation / total_allocation for ticker, allocation in self.allocation_dict.items()}
+            if losing_for_5_days and self.stock_holdings[ticker] == False:
+                allocation_dict[ticker] = 1  # Allocate all to this stock
+                self.stock_holdings[ticker] = True  # Update the holding status
+            else:
+                allocation_dict[ticker] = 0  # Allocate all to this stock
+                self.stock_holdings[ticker] = False  # Update the holding status
         
-        return TargetAllocation(shared_decimal_allocation)
+        # Filter out the stocks with value 1
+        allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
+        
+        # Calculate total number of allocated stocks
+        total_allocated = len(allocated_stocks)
+        
+        # If no stocks are allocated, return an empty list
+        if total_allocated == 0:
+            return TargetAllocation({})
+        
+        # Calculate percentage share for each allocated stock
+        percentage_share = (1 / total_allocated) - 0.01
+        
+        # Update the dictionary with percentage share for allocated stocks
+        for ticker in allocated_stocks:
+            allocation_dict[ticker] = percentage_share
+        
+        # Return the target allocation
+        return TargetAllocation(allocation_dict)
