@@ -32,7 +32,7 @@ class TradingStrategy(Strategy):
     @property
     def interval(self):
         # Strategy operates on 1-minute intervals
-        return "1min"
+        return "1hour"
 
     def run(self, data):
         for ticker in self.tickers:
