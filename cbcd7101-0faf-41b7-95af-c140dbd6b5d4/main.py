@@ -5,11 +5,9 @@ from surmount.data import Asset
 class TradingStrategy(Strategy):
     def __init__(self):
         """
-        Initialize the strategy with the stocks we are interested in.
-        Here, we keep it dynamic based on the criteria instead of hardcoding tickers.
+        Initialize the strategy with an empty list of candidate stocks.
         """
-        # Assume this is populated with tickers that meet the initial criteria
-        self.candidate_stocks = ["ADD","AMBO","AMIX","APVO","AUUD","AVGR","AZTR","BBLG","BIAF","BOF","BPTH","BSGM","BTCY","BTOG","CAUD","CISO","DLA","EEIQ","EFOI","WAVD","TNON","STI","STAF","SOND","SNCR","RELI","RCRT","PRTG","PIK","OMQS","NXL","NUKK","LBBB","KA","JAN","INSG","IDAI","HWH","HEPA","HTCI","GXAI","EZFL","EGIO","EFOIEEIQ","DLA","CMAX"]
+        self.candidate_stocks = []
         # Track entry prices for the stocks we invest in
         self.entry_prices = {}
 
@@ -18,13 +16,12 @@ class TradingStrategy(Strategy):
         """
         Specify the list of assets this strategy will evaluate.
         """
-        # This dynamically updates to include only stocks that meet our criteria
         return self.candidate_stocks
 
     @property
     def interval(self):
         """
-        Run this strategy on a daily interval for daily price checks.
+        Run this strategy on a minute interval.
         """
         return "1min"
 
@@ -35,6 +32,9 @@ class TradingStrategy(Strategy):
         """
         allocation_dict = {}
         
+        # Populate candidate_stocks list at the beginning of the run function
+        self.populate_candidate_stocks(data)
+
         for ticker in self.assets:
             ohlcv_data = data["ohlcv"][ticker]
             asset_data = Asset(ticker)
@@ -62,3 +62,17 @@ class TradingStrategy(Strategy):
                     allocation_dict[ticker] = 0.1  # Maintain current allocation
 
         return TargetAllocation(allocation_dict)
+    
+    def populate_candidate_stocks(self, data):
+        """
+        Populate the candidate_stocks list based on some criteria.
+        """
+        # Example criteria: Include all assets with positive percentage change
+        for ticker in data["ohlcv"]:
+            ohlcv_data = data["ohlcv"][ticker]
+            percentage_change = ((ohlcv_data["close"][-1] - ohlcv_data["open"][-1]) / ohlcv_data["open"][-1]) * 100
+            if percentage_change > 0:
+                self.candidate_stocks.append(ticker)
+
+# Example usage:
+strategy = TradingStrategy()
