@@ -7,7 +7,7 @@ class TradingStrategy(Strategy):
         # Define the ticker of interest
         self.ticker = "MSFT"
         self.lookback_periods = 30  # Lookback period to calculate average volume
-        self.large_sell_threshold = 1.5  # Define what is considered a large sell order (relative to average volume)
+        self.large_sell_threshold = 10000  # Define what is considered a large sell order
         self.buy_signal_activated = False  # Track if a buy signal has been activated
 
     @property
@@ -31,7 +31,8 @@ class TradingStrategy(Strategy):
             # Calculate the average volume over the lookback period
             average_volume = sum([i[self.ticker]["volume"] for i in recent_data[-self.lookback_periods:]]) / self.lookback_periods
             current_volume = recent_data[-1][self.ticker]["volume"]
-            transaction_type = recent_data[-1][self.ticker].get("transactionType", "")
+            transaction_type = recent_data[-1][self.ticker].get("acquistionOrDisposition", "")
+            transaction_amt = recent_date[-1][self.ticker].get("securitiesTransacted","")
 
             # If the current volume is significantly higher than the average, buy MSFT
             if current_volume > average_volume and not self.buy_signal_activated:
@@ -39,7 +40,7 @@ class TradingStrategy(Strategy):
                 allocation_dict[self.ticker] = 1  # Buy (go long on) MSFT
                 self.buy_signal_activated = True
             # Sell MSFT if a large sell order is detected
-            elif self.buy_signal_activated and transaction_type == "Sale" and current_volume > (average_volume * self.large_sell_threshold):
+            elif self.buy_signal_activated and transaction_type == "D" and transaction_amt > self.large_sell_threshold:
                 log(f"Sell signal activated for {self.ticker} due to large sell order")
                 allocation_dict[self.ticker] = 0  # Sell MSFT
                 self.buy_signal_activated = False
