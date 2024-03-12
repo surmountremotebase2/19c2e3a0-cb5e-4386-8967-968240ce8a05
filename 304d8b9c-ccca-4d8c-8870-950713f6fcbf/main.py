@@ -43,8 +43,5 @@ class TradingStrategy(Strategy):
             elif current_price >= bb["mid"][-1] and current_price > bb["lower"][-1]:
                 log("Price returned to middle band, selling SQ")
                 allocation["SQ"] = 0
-            else:
-                # Maintain the current allocation if no conditions are met
-                log("No action required, holding position")
         
         return TargetAllocation(allocation)
