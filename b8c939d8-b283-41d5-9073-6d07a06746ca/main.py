@@ -34,7 +34,7 @@ class TradingStrategy(Strategy):
         # Strategy operates on 1-minute intervals
         return "1day"
 
-    def run(self, data):ohlcv_data = data["ohlcv"]
+    def run(self, data):
         for ticker in self.tickers:
             # Extract the recent volume and trading data for the ticker
             recent_data = data["ohlcv"][ticker]
@@ -60,7 +60,7 @@ class TradingStrategy(Strategy):
                 self.allocation_dict[ticker] = 1  # Maintain current holding
 
         # Filter out the stocks with value 1
-        allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
+        allocated_stocks = [ticker for ticker, value in self.allocation_dict.items() if value == 1]
         
         # Calculate total number of allocated stocks
         total_allocated = len(allocated_stocks)
@@ -74,7 +74,7 @@ class TradingStrategy(Strategy):
         
         # Update the dictionary with percentage share for allocated stocks
         for ticker in allocated_stocks:
-            allocation_dict[ticker] = percentage_share
+            self.allocation_dict[ticker] = percentage_share
         
         # Return the target allocation
-        return TargetAllocation(allocation_dict)
+        return TargetAllocation(self.allocation_dict)
