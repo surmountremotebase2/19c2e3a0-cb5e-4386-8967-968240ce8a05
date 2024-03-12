@@ -47,4 +47,4 @@ class TradingStrategy(Strategy):
         elif self.buy_signal_activated:
             allocation_dict[self.ticker] = 1  # Maintain current holding
 
-    return TargetAllocation(allocation_dict)
+        return TargetAllocation(allocation_dict)
