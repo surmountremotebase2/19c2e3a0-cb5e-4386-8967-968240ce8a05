@@ -6,6 +6,13 @@ import pandas as pd
 
 
 class TradingStrategy(Strategy):
+    def SMAVol(ticker, data, length):
+        close = [i[ticker]["volume"] for i in data]
+        d = ta.sma(pd.Series(close), length=length)
+        if d is None:
+            return None
+        return d.tolist()
+
     def __init__(self):
         # Define the ticker of interest
         self.tickers = ["AAPL", "MSFT", "AMZN", "GOOGL", 
@@ -26,22 +33,6 @@ class TradingStrategy(Strategy):
         self.large_sell_threshold = 10000  # Define what is considered a large sell order
         self.buy_signal_activated = False  # Track if a buy signal has been activated
         self.allocation_dict = {ticker: 0 for ticker in self.tickers}  # Initialize allocation dict for all tickers
-
-
-    def SMAVol(ticker, data, length):
-        '''Calculate the moving average of trading volume
-
-        :param ticker: a string ticker
-        :param data: data as provided from the OHLCV data function
-        :param length: the window
-
-        :return: list with float SMA
-        '''
-        close = [i[ticker]["volume"] for i in data]
-        d = ta.sma(pd.Series(close), length=length)
-        if d is None:
-            return None
-        return d.tolist()
 
 
     @property
