@@ -54,14 +54,14 @@ class TradingStrategy(Strategy):
                 continue
 
             vols = [i[ticker]["volume"] for i in data["ohlcv"]]
-            smavol40 = SMAVol(ticker, data["ohlcv"], 40)
-            smavol5 = SMAVol(ticker, data["ohlcv"], 5)
+            smavol40 = SMAVol(ticker, data["ohlcv"], 20)
+            smavol5 = SMAVol(ticker, data["ohlcv"], 2)
 
             if len(vols)==0 or smavol40[-1] is None or smavol40[-1] <= 0 or smavol5[-1] is None or smavol5[-1] <= 0:
                     allocation_dict[ticker] = 0
                     continue
                     
-            if smavol5[-1]/smavol40[-1]-1>0:
+            if smavol5[-1]/smavol40[-1]-1<0:
                 allocation_dict[ticker] = 1
             else: 
                 allocation_dict[ticker] = 0
