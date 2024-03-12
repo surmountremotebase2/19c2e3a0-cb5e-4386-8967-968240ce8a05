@@ -26,7 +26,7 @@ class TradingStrategy(Strategy):
         """
         Run this strategy on a daily interval for daily price checks.
         """
-        return "1hour"
+        return "1min"
 
     def run(self, data):
         """
