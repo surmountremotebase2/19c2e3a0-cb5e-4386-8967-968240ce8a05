@@ -33,7 +33,7 @@ class TradingStrategy(Strategy):
         allocation_dict = {}
         
         # Populate candidate_stocks list at the beginning of the run function
-        self.populate_candidate_stocks(data)
+        self.candidate_stocks = data["ohlcv"][ticker]
 
         for ticker in self.assets:
             ohlcv_data = data["ohlcv"][ticker]
@@ -62,14 +62,3 @@ class TradingStrategy(Strategy):
                     allocation_dict[ticker] = 0.1  # Maintain current allocation
 
         return TargetAllocation(allocation_dict)
-    
-    def populate_candidate_stocks(self, data):
-        """
-        Populate the candidate_stocks list based on some criteria.
-        """
-        # Example criteria: Include all assets with positive percentage change
-        for ticker in data["ohlcv"]:
-            ohlcv_data = data["ohlcv"][ticker]
-            percentage_change = ((ohlcv_data["close"][-1] - ohlcv_data["open"][-1]) / ohlcv_data["open"][-1]) * 100
-            if percentage_change > 0:
-                self.candidate_stocks.append(ticker)
