@@ -3,20 +3,12 @@ from surmount.logging import log
 from surmount.data import Asset
 
 class TradingStrategy(Strategy):
-    def __init__(self):
-        """
-        Initialize the strategy with an empty list of candidate stocks.
-        """
-        self.candidate_stocks = []
-        # Track entry prices for the stocks we invest in
-        self.entry_prices = {}
-
     @property
     def assets(self):
         """
         Specify the list of assets this strategy will evaluate.
         """
-        return self.candidate_stocks
+        return ["ADD","AMBO","AMIX","APVO","AUUD","AVGR","AZTR","BBLG","BIAF","BOF","BPTH","BSGM","BTCY","BTOG","CAUD","CISO","DLA","EEIQ","EFOI","WAVD","TNON","STI","STAF","SOND","SNCR","RELI","RCRT","PRTG","PIK","OMQS","NXL","NUKK","LBBB","KA","JAN","INSG","IDAI","HWH","HEPA","HTCI","GXAI","EZFL","EGIO","EFOIEEIQ","DLA","CMAX"]
 
     @property
     def interval(self):
@@ -26,15 +18,6 @@ class TradingStrategy(Strategy):
         return "1min"
 
     def run(self, data):
-        """
-        Executes the strategy to buy stocks that meet the criteria and sells based on the
-        profit/loss threshold.
-        """
-        allocation_dict = {}
-        
-        # Populate candidate_stocks list at the beginning of the run function
-        self.candidate_stocks = data["ohlcv"][ticker]
-
         for ticker in self.assets:
             ohlcv_data = data["ohlcv"][ticker]
             asset_data = Asset(ticker)
