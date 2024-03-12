@@ -58,7 +58,7 @@ class TradingStrategy(Strategy):
             smavol40 = SMAVol(ticker, data["ohlcv"], 40)
             smavol5 = SMAVol(ticker, data["ohlcv"], 5)
 
-            if len(vols)==0 or smavol40 is None or smavol40 <= 0 or smavol5 is None or smavol5 <= 0:
+            if len(vols)==0 or smavol40[-1] is None or smavol40[-1] <= 0 or smavol5[-1] is None or smavol5[-1] <= 0:
                     self.allocation_dict[ticker] = 0
                     continue
                     
