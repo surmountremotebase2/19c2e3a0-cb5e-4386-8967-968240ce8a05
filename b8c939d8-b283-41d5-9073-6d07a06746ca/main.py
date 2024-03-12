@@ -59,5 +59,22 @@ class TradingStrategy(Strategy):
             elif self.buy_signal_activated:
                 self.allocation_dict[ticker] = 1  # Maintain current holding
 
-        shared_decimal_allocation = {ticker: allocation / total_allocation for ticker, allocation in self.allocation_dict.items()}
-        return TargetAllocation(self.shared_decimal_allocation)
+        # Filter out the stocks with value 1
+        allocated_stocks = [ticker for ticker, value in allocation_dict.items() if value == 1]
+        
+        # Calculate total number of allocated stocks
+        total_allocated = len(allocated_stocks)
+        
+        # If no stocks are allocated, return an empty list
+        if total_allocated == 0:
+            return TargetAllocation({})
+
+        # Calculate percentage share for each allocated stock
+        percentage_share = (1 / total_allocated) - 0.01
+        
+        # Update the dictionary with percentage share for allocated stocks
+        for ticker in allocated_stocks:
+            allocation_dict[ticker] = percentage_share
+        
+        # Return the target allocation
+        return TargetAllocation(allocation_dict)
