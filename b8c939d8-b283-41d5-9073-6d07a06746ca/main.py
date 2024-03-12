@@ -34,7 +34,7 @@ class TradingStrategy(Strategy):
         # Strategy operates on 1-minute intervals
         return "1day"
 
-    def run(self, data):
+    def run(self, data):ohlcv_data = data["ohlcv"]
         for ticker in self.tickers:
             # Extract the recent volume and trading data for the ticker
             recent_data = data["ohlcv"][ticker]
