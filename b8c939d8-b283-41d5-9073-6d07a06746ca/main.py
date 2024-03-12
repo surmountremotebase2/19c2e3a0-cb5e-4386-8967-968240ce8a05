@@ -50,7 +50,7 @@ class TradingStrategy(Strategy):
 
         for ticker in self.tickers:
             # Check if we have enough data points (at least 4 days to make a decision)
-            if len(data["ohlcv"]) < 30:
+            if len(data["ohlcv"]) < 40:
                 allocation_dict[ticker] = 0
                 continue
 
