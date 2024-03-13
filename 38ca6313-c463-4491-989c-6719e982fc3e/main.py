@@ -31,7 +31,7 @@ class TradingStrategy(Strategy):
 
         for ticker in self.tickers:
             # Ensure there is sufficient data for calculating averages
-            if len(data["ohlcv"]) >= 30:
+            if len(data["ohlcv"][ticker]) >= 30:
                 # Calculate the 30-day average volume
                 avg_volume = ta.sma(pd.Series([i[ticker]["volume"] for i in data["ohlcv"]]), length=30)[-1]
                 current_volume = data["ohlcv"][-1][ticker]["volume"]
