@@ -6,7 +6,7 @@ class TradingStrategy(Strategy):
     def __init__(self):
         # Assuming 'small_cap_stocks' is a dynamic list updated with small cap stocks.
         # In reality, you would need a process that updates this list regularly based on market cap data.
-        self.small_cap_stocks = ["TICKER1", "TICKER2"]  # Placeholder tickers.
+        self.small_cap_stocks = ["MSFT", "AAPL"]  # Placeholder tickers.
         self.selected_stock = None
         self.entry_price = None
         self.target_gain = 0.10  # 10% gain target
