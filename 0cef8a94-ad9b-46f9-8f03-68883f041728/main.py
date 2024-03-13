@@ -19,7 +19,7 @@ class TradingStrategy(Strategy):
     @property
     def interval(self):
         # Operates on a weekly interval
-        return "1week"
+        return "6days"
 
     @property
     def data(self):
