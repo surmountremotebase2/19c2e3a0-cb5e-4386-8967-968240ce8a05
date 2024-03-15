@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from surmount.base_class import Strategy, TargetAllocation
-from surmount.technical_indicators import SMA, EMA, WMA
+from surmount.technical_indicators import SMA, EMA
 from surmount.data import Asset
 
 class TradingStrategy(Strategy):
