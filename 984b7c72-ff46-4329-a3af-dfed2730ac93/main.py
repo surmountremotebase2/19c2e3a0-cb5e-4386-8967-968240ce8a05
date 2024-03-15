@@ -43,18 +43,12 @@ class TradingStrategy(Strategy):
                 allocation_dict[ticker] = 0
                 continue
 
-            signals = pd.DataFrame(index=ohlcv_data.index)
-            signals['Signal'] = 0.0
-
             # Create short and long moving averages
-            signals['Short_MA'] = technical_indicators.SMA(ticker, data, 50)
-            signals['Long_MA'] = technical_indicators.SMA(ticker, data, 200)
-
-            # Generate trading signals
-            signals['Signal'] = np.where(signals['Short_MA'] > signals['Long_MA'], 1.0, 0.0)
+            short_signal = technical_indicators.SMA(ticker, data, 50)
+            long_signal = technical_indicators.SMA(ticker, data, 200)
 
             # Generate buy and sell signals
-            signal = 1 if short_ma.iloc[-1] > long_ma.iloc[-1] else 0
+            signal = 1 if short_signal > long_signal else 0
 
 
             if signal and self.stock_holdings[ticker] == False:
