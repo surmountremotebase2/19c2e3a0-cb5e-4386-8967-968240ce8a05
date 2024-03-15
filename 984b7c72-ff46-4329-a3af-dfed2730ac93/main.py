@@ -48,7 +48,7 @@ class TradingStrategy(Strategy):
             long_signal = SMA(ticker, ohlcv_data, 200)
 
             # Generate buy and sell signals
-            signal = 1 if short_signal > long_signal else 0
+            signal = 1 if short_signal[-1] > long_signal[-1] else 0
 
 
             if signal and self.stock_holdings[ticker] == False:
