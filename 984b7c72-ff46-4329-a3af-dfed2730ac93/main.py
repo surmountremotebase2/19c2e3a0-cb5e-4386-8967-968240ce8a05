@@ -45,7 +45,7 @@ class TradingStrategy(Strategy):
 
             # Create short and long moving averages
             short_signal = SMA(ticker, ohlcv_data, 10)
-            long_signal = SMA(ticker, ohlcv_data, 200)
+            long_signal = SMA(ticker, ohlcv_data, 50)
 
             # Generate buy and sell signals
             signal = 1 if short_signal[-1] > long_signal[-1] else 0
