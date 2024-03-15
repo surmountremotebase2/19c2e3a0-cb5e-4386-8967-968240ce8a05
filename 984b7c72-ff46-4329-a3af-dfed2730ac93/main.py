@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from surmount.base_class import Strategy, TargetAllocation
-from surmount.technical_indicators import SMA
+from surmount.technical_indicators import SMA, EMA
 from surmount.data import Asset
 
 class TradingStrategy(Strategy):
@@ -44,8 +44,8 @@ class TradingStrategy(Strategy):
                 continue
 
             # Create short and long moving averages
-            short_signal = SMA(ticker, ohlcv_data, 10)
-            long_signal = SMA(ticker, ohlcv_data, 50)
+            short_signal = EMA(ticker, ohlcv_data, 10)
+            long_signal = EMA(ticker, ohlcv_data, 50)
 
             # Generate buy and sell signals
             signal = 1 if short_signal[-1] > long_signal[-1] else 0
