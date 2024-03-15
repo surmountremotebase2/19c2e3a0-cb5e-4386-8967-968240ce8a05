@@ -43,7 +43,7 @@ class TradingStrategy(Strategy):
                 allocation_dict[ticker] = 0
                 continue
 
-            signals = pd.DataFrame(index=ohlcv_data[-1][ticker].index)
+            signals = pd.DataFrame(index=ohlcv_data.index)
             signals['Signal'] = 0.0
 
             # Create short and long moving averages
