@@ -6,7 +6,7 @@ class TradingStrategy(Strategy):
 
     @property
     def assets(self):
-        return ["QQQ", "SQQQ"]
+        return ["F", "BP"]
 
     @property
     def interval(self):
@@ -16,32 +16,32 @@ class TradingStrategy(Strategy):
         holdings = data["holdings"]
         data = data["ohlcv"]
 
-        sqqq_stake = 0
-        qqq_stake = 0
+        BP_stake = 0
+        F_stake = 0
 
-        qqq_bbands = BB("QQQ", data, 20, 1.4)
-        qqq_ma = SMA("QQQ", data, 5)
+        F_bbands = BB("F", data, 20, 1.4)
+        F_ma = SMA("F", data, 5)
 
         if len(data)<20:
             return TargetAllocation({})
 
-        current_price = data[-1]["QQQ"]['close']
+        current_price = data[-1]["F"]['close']
 
-        if qqq_bbands is not None and current_price < qqq_bbands['lower'][-1] and qqq_ma[-1]>qqq_ma[-2]:
+        if F_bbands is not None and current_price < F_bbands['lower'][-1] and F_ma[-1]>F_ma[-2]:
             log("going long")
-            if holdings["QQQ"] >= 0:
-                qqq_stake = min(1, holdings["QQQ"]+0.1)
+            if holdings["F"] >= 0:
+                F_stake = min(1, holdings["F"]+0.1)
             else:
-                qqq_stake = 0.4
-        elif qqq_bbands is not None and current_price > qqq_bbands['upper'][-1]:
+                F_stake = 0.4
+        elif F_bbands is not None and current_price > F_bbands['upper'][-1]:
             log("going short")
-            if holdings["SQQQ"] >= 0:
-                sqqq_stake = min(1, holdings["SQQQ"]+0.075)
+            if holdings["BP"] >= 0:
+                BP_stake = min(1, holdings["BP"]+0.075)
             else:
-                sqqq_stake = 0.2
+                BP_stake = 0.2
         else:
             log("meh")
-            qqq_stake = 0
-            sqqq_stake = 0
+            F_stake = 0
+            BP_stake = 0
 
-        return TargetAllocation({"SQQQ": sqqq_stake, "QQQ": qqq_stake})
+        return TargetAllocation({"BP": BP_stake, "F": F_stake})
