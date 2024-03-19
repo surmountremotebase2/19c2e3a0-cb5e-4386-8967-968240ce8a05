@@ -122,7 +122,7 @@ class TradingStrategy(Strategy):
             return TargetAllocation({})
         
         # Calculate percentage share for each allocated stock
-        percentage_share = (1 / total_allocated) - 0.01
+        percentage_share = (1 / total_allocated) - 0.001
         
         # Update the dictionary with percentage share for allocated stocks
         for ticker in allocated_stocks:
